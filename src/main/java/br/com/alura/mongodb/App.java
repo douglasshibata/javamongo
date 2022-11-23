@@ -30,8 +30,9 @@ public class App {
         alunos.insertOne(novoAluno); */
         Document aluno = alunos.find().first();
         System.out.println(aluno);
-        alunos.updateOne(Filters.eq("nome", "Joao"),
-                new Document("$set", new Document("nome", "Joao Silva")));
+        // alunos.updateOne(Filters.eq("nome", "Joao"),
+                // new Document("$set", new Document("nome", "Joao Silva")));
+                alunos.deleteOne(Filters.eq("nome", "Joao"));
         cliente.close();
     }
 }
