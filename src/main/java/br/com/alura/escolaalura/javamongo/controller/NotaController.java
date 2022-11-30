@@ -18,7 +18,7 @@ public class NotaController {
     @Autowired
     private AlunoRepository repository;
 
-    @GetMapping("/nota/cadastrar/{id}")
+    @GetMapping("nota/salvar/{id}")
     public String cadastrar(@PathVariable String id, Model model) {
         Aluno aluno = repository.obterAlunoPor(id);
         model.addAttribute("aluno", aluno);
