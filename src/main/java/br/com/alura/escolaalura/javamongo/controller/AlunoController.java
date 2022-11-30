@@ -1,5 +1,7 @@
 package br.com.alura.escolaalura.javamongo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +20,22 @@ public class AlunoController {
 
     @GetMapping("/aluno/cadastrar")
     public String cadastrar(Model model) {
+
         model.addAttribute("aluno", new Aluno());
+
         return "aluno/cadastrar";
     }
 
     @PostMapping("/aluno/salvar")
     public String salvar(@ModelAttribute Aluno aluno) {
         repositorio.salvar(aluno); // salvando o aluno
-        return "redirect: /";
+        return "redirect:/";
+    }
+
+    @GetMapping("/aluno/listar")
+    public String listar(Model model) {
+        List<Aluno> alunos = repositorio.obterTodosAlunos();
+        model.addAttribute("alunos", alunos);
+        return "aluno/listar";
     }
 }

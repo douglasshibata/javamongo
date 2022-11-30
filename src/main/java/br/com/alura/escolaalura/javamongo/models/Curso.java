@@ -3,6 +3,13 @@ package br.com.alura.escolaalura.javamongo.models;
 public class Curso {
     private String nome;
 
+    public Curso() {
+    }
+
+    public Curso(String nome) {
+        this.nome = nome;
+    }
+
     public String getNome() {
         return nome;
     }

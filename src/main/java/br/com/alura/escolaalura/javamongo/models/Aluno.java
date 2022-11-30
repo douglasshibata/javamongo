@@ -4,10 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Aluno {
     private ObjectId id;
     private String nome;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataNascimento;
     private Curso curso;
     private List<Nota> notas;
@@ -62,6 +65,11 @@ public class Aluno {
     }
 
     public Aluno criaId() {
+        setId(new ObjectId());
+        return this;
+    }
+
+    public Aluno gerarNovoId() {
         setId(new ObjectId());
         return this;
     }
