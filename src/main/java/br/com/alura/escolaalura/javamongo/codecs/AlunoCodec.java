@@ -16,6 +16,7 @@ import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
 import br.com.alura.escolaalura.javamongo.models.Aluno;
+import br.com.alura.escolaalura.javamongo.models.Contato;
 import br.com.alura.escolaalura.javamongo.models.Curso;
 import br.com.alura.escolaalura.javamongo.models.Habilidade;
 import br.com.alura.escolaalura.javamongo.models.Nota;
@@ -39,7 +40,7 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
 
         List<Habilidade> habilidades = aluno.getHabilidades();
         List<Nota> notas = aluno.getNotas();
-        // Contato contato = aluno.getContato();
+        Contato contato = aluno.getContato();
 
         document.put("_id", id);
         document.put("nome", nome);
@@ -65,7 +66,7 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
 
         }
 
-      /*   List<Double> coordinates = new ArrayList<Double>();
+        List<Double> coordinates = new ArrayList<Double>();
         for (Double location : contato.getCoordinates()) {
             coordinates.add(location);
         }
@@ -73,7 +74,7 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
         document.put("contato", new Document()
                 .append("endereco", contato.getEndereco())
                 .append("coordinates", coordinates)
-                .append("type", contato.getType())); */
+                .append("type", contato.getType()));
 
         codec.encode(writer, document, encoderContext);
     }
@@ -117,13 +118,13 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
             aluno.setNotas(notas);
         }
 
-      /*   Document contato = (Document) document.get("contato");
+        Document contato = (Document) document.get("contato");
         if (contato != null) {
             String endereco = contato.getString("endereco");
             List<Double> coordinates = (List<Double>) contato.get("coordinates");
             aluno.setContato(new Contato(endereco, coordinates));
 
-        } */
+        }
 
         return aluno;
     }
