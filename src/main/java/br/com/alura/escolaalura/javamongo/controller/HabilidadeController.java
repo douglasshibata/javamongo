@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.alura.escolaalura.javamongo.models.Aluno;
 import br.com.alura.escolaalura.javamongo.models.Habilidade;
@@ -22,5 +24,14 @@ public class HabilidadeController {
         model.addAttribute("aluno", aluno);
         model.addAttribute("habilidade", new Habilidade());
         return "habilidade/cadastrar";
+    }
+
+    @PostMapping("habilidade/salvar/{id}")
+    public String salvar(@PathVariable String id, @ModelAttribute Habilidade habilidade) {
+        Aluno aluno = repositorio.obterAlunoPor(id);
+
+        repositorio.salvar(aluno.adiciona(aluno, habilidade));
+
+        return "redirect:/aluno/listar";
     }
 }
