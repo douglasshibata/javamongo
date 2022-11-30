@@ -18,6 +18,7 @@ import org.bson.types.ObjectId;
 import br.com.alura.escolaalura.javamongo.models.Aluno;
 import br.com.alura.escolaalura.javamongo.models.Curso;
 import br.com.alura.escolaalura.javamongo.models.Habilidade;
+import br.com.alura.escolaalura.javamongo.models.Nota;
 
 public class AlunoCodec implements CollectibleCodec<Aluno> {
 
@@ -35,47 +36,44 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
         String nome = aluno.getNome();
         Date dataNascimento = aluno.getDataNascimento();
         Curso curso = aluno.getCurso();
-        /*
-         * List<Habilidade> habilidades = aluno.getHabilidades();
-         * List<Nota> notas = aluno.getNotas();
-         * Contato contato = aluno.getContato();
-         */
+
+        List<Habilidade> habilidades = aluno.getHabilidades();
+        List<Nota> notas = aluno.getNotas();
+        // Contato contato = aluno.getContato();
 
         document.put("_id", id);
         document.put("nome", nome);
         document.put("dataNascimento", dataNascimento);
         document.put("curso", new Document().append("nome", curso.getNome()));
 
-        /*
-         * if (habilidades != null) {
-         * List<Document> habilidadesDocument = new ArrayList<Document>();
-         * for (Habilidade habilidade : habilidades) {
-         * habilidadesDocument.add(
-         * new Document().append("nome", habilidade.getNome()).append("nivel",
-         * habilidade.getNivel()));
-         * }
-         * document.put("habilidades", habilidadesDocument);
-         * }
-         * 
-         * if (notas != null) {
-         * List<Document> notasDocument = new ArrayList<Document>();
-         * for (Nota nota : notas) {
-         * notasDocument.add(new Document().append("valor", nota.getValor()));
-         * }
-         * document.put("notas", notasDocument);
-         * 
-         * }
-         * 
-         * List<Double> coordinates = new ArrayList<Double>();
-         * for (Double location : contato.getCoordinates()) {
-         * coordinates.add(location);
-         * }
-         * 
-         * document.put("contato", new Document()
-         * .append("endereco", contato.getEndereco())
-         * .append("coordinates", coordinates)
-         * .append("type", contato.getType()));
-         */
+        if (habilidades != null) {
+            List<Document> habilidadesDocument = new ArrayList<Document>();
+            for (Habilidade habilidade : habilidades) {
+                habilidadesDocument.add(
+                        new Document().append("nome", habilidade.getNome()).append("nivel",
+                                habilidade.getNivel()));
+            }
+            document.put("habilidades", habilidadesDocument);
+        }
+
+        if (notas != null) {
+            List<Document> notasDocument = new ArrayList<Document>();
+            for (Nota nota : notas) {
+                notasDocument.add(new Document().append("valor", nota.getValor()));
+            }
+            document.put("notas", notasDocument);
+
+        }
+
+      /*   List<Double> coordinates = new ArrayList<Double>();
+        for (Double location : contato.getCoordinates()) {
+            coordinates.add(location);
+        }
+
+        document.put("contato", new Document()
+                .append("endereco", contato.getEndereco())
+                .append("coordinates", coordinates)
+                .append("type", contato.getType())); */
 
         codec.encode(writer, document, encoderContext);
     }
@@ -109,24 +107,23 @@ public class AlunoCodec implements CollectibleCodec<Aluno> {
             }
             aluno.setHabilidades(habilidades);
         }
-        /*
-         * List<Document> notasDocument = (List<Document>) document.get("notas");
-         * if (notasDocument != null) {
-         * List<Nota> notas = new ArrayList<Nota>();
-         * for (Document documentNota : notasDocument) {
-         * notas.add(new Nota(documentNota.getDouble("valor")));
-         * }
-         * aluno.setNotas(notas);
-         * }
-         * 
-         * Document contato = (Document) document.get("contato");
-         * if (contato != null) {
-         * String endereco = contato.getString("endereco");
-         * List<Double> coordinates = (List<Double>) contato.get("coordinates");
-         * aluno.setContato(new Contato(endereco, coordinates));
-         * 
-         * }
-         */
+
+        List<Document> notasDocument = (List<Document>) document.get("notas");
+        if (notasDocument != null) {
+            List<Nota> notas = new ArrayList<Nota>();
+            for (Document documentNota : notasDocument) {
+                notas.add(new Nota(documentNota.getDouble("valor")));
+            }
+            aluno.setNotas(notas);
+        }
+
+      /*   Document contato = (Document) document.get("contato");
+        if (contato != null) {
+            String endereco = contato.getString("endereco");
+            List<Double> coordinates = (List<Double>) contato.get("coordinates");
+            aluno.setContato(new Contato(endereco, coordinates));
+
+        } */
 
         return aluno;
     }
